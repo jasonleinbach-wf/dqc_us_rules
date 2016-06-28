@@ -213,7 +213,8 @@ def _deprecated_dimension(val, dim_concept):
     """
     if not isinstance(dim_concept, ModelConcept):
         return False
-    elif dim_concept.name in val.usgaapDeprecations:
+    elif ((hasattr(val, 'usgaapDeprecations') and
+           dim_concept.name in val.usgaapDeprecations)):
         return True
     return False
 
@@ -231,7 +232,7 @@ def _deprecated_member(val, model_dim):
     """
     if model_dim.isExplicit:
         member = model_dim.member
-        if member is not None:
+        if member is not None and hasattr(val, 'usgaapDeprecations'):
             if member.name in val.usgaapDeprecations:
                 return True
     return False
